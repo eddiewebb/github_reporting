@@ -1,0 +1,29 @@
+version: 2.1
+
+jobs:
+  build:
+    docker:
+      - image: cimg/base:latest
+    steps:
+      - checkout
+      - run: |
+          bash resolution_time.bash
+      - store_artifacts:
+          path: ./closed_durations.json
+          destination: summary
+
+
+
+workflows:
+  version: 2
+  nightly:
+    triggers:
+     - schedule:
+          cron: "0 5 * * *"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - build
+
