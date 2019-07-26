@@ -10,7 +10,7 @@ HEADER_AUTH="Authorization: token ${GITHUB_API_TOKEN}"
 
 
 
-LAST_WEEK=`date -d '-1 week' --iso-8601`
+LAST_WEEK=`date -d "$report_duration" --iso-8601`
 
 # TODO: This will include PRS, should we filter out?
 ISSUES_URL="${BASE_URL}/orgs/CircleCI-Public/issues?filter=all&since=${LAST_WEEK}&state=closed"

@@ -4,6 +4,8 @@ jobs:
   build:
     docker:
       - image: cimg/base:latest
+    environment:
+      report_duration: <<pipeline.parameters.duration>>
     steps:
       - checkout
       - run: |
@@ -16,6 +18,10 @@ jobs:
 
 workflows:
   version: 2
+  adhoc:
+    when: <<pipeline.parameters.adhoc>>
+    jobs:
+      - build
   nightly:
     triggers:
      - schedule:
@@ -27,3 +33,10 @@ workflows:
     jobs:
       - build
 
+parameters:
+  adhoc:
+    type: boolean
+    default: false
+  duration:
+    type: string
+    default: "-1 week"
