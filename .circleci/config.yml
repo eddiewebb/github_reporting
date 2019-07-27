@@ -8,7 +8,7 @@ jobs:
       report_duration: <<pipeline.parameters.duration>>
     steps:
       - checkout
-      - run: sudo apt-get update -y && sudo apt-get install figlet
+      - run: apt-get update -y && apt-get install figlet
       - run: |
           bash resolution_time.bash
       - run:
