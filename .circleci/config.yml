@@ -8,8 +8,12 @@ jobs:
       report_duration: <<pipeline.parameters.duration>>
     steps:
       - checkout
+      - run: sudo apt-get update -y && sudo apt-get install figlet
       - run: |
           bash resolution_time.bash
+      - run:
+          name: Results
+          command: jq -r '.avg' | figlet -f assets/doh.flf
       - store_artifacts:
           path: ./closed_durations.json
           destination: summary
@@ -23,13 +27,13 @@ workflows:
     jobs:
       - build
   nightly:
-    triggers:
-     - schedule:
-          cron: "0 5 * * *"
-          filters:
-            branches:
-              only:
-                - master
+    # triggers:
+    #  - schedule:
+    #       cron: "0 5 * * *"
+    #       filters:
+    #         branches:
+    #           only:
+    #             - master
     jobs:
       - build
 
@@ -39,4 +43,4 @@ parameters:
     default: false
   duration:
     type: string
-    default: "-1 week"
+    default: "-28 days"
