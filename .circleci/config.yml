@@ -13,7 +13,7 @@ jobs:
           bash resolution_time.bash
       - run:
           name: Results
-          command: jq -r '.avg' | figlet -f assets/doh.flf
+          command: jq '.avg' closed_durations,json | figlet -f assets/doh.flf
       - store_artifacts:
           path: ./closed_durations.json
           destination: summary
